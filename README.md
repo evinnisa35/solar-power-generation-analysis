@@ -144,12 +144,11 @@ solar-power-generation-analysis/
 │   ├── generation.csv
 │   └── weather.csv
 │
-├── notebooks/
-│   └── solar_power_analysis.ipynb
-│
 ├── figures/
 │   ├── daily_generation_profile.png
 │   ├── irradiation_vs_ac_power.png
+│   ├── module_temperature_vs_ac_power.png
+│   ├── ambient_temperature_vs_ac_power.png
 │   └── inverter_comparison.png
 │
 ├── src/
@@ -157,7 +156,8 @@ solar-power-generation-analysis/
 │
 ├── README.md
 └── requirements.txt
- Future Work
+
+## Future Work
 
 This project is the first stage of a larger AI-integrated solar power
 plant analysis system.
