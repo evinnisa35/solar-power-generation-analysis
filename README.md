@@ -157,33 +157,6 @@ solar-power-generation-analysis/
 ├── README.md
 └── requirements.txt
 
-## Future Work
+## Project Status
 
-This project is the first stage of a larger AI-integrated solar power
-plant analysis system.
-
-Planned future developments include:
-
-Stage 2 - Machine Learning
-Feature engineering
-Solar power generation prediction
-Train/test split
-Regression models
-Model evaluation using MAE, RMSE and R²
-Comparison of different machine learning algorithms
-Stage 3 - AI-Integrated Solar Plant Monitoring
-Real-time generation prediction
-Anomaly detection
-Inverter performance monitoring
-Weather-based generation forecasting
-Interactive dashboard
-AI-assisted operational insights
-
-Author
-
-Evin Nisa Terat
-
-Electrical and Electronics Engineering Student
-
-
-Project Status
+**Stage 1 - Data Analysis: Completed**
