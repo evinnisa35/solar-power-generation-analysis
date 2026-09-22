@@ -1,148 +1,262 @@
-## 📊 Dataset
+# Solar Power Generation Analysis
 
-This project uses the following publicly available dataset from Kaggle:
+A data analysis and machine learning project focused on analyzing solar power generation data and predicting AC power output using environmental and time-based features.
 
-**Solar Power Generation Data**  
-Dataset by Anikannal
+The project is developed in multiple stages, starting with exploratory data analysis and continuing with machine learning-based power prediction.
 
-[View dataset on Kaggle](https://www.kaggle.com/datasets/anikannal/solar-power-generation-data)
+---
 
-The dataset contains real-world measurements from a photovoltaic (PV) power plant.
+## Project Overview
+
+Solar power generation is affected by several factors, including solar irradiation, temperature, time of day, and seasonal changes.
+
+In this project, solar power generation data and weather data are analyzed to:
+
+* Explore solar power generation patterns
+* Analyze the relationship between environmental conditions and AC power
+* Compare inverter-level power generation
+* Build machine learning models for AC power prediction
+* Evaluate and compare different regression models
+
+The project is organized into three stages:
+
+* **Stage 1:** Data Analysis
+* **Stage 2:** Machine Learning Prediction
+* **Stage 3:** Advanced PV Analysis
+
+---
+
+## Dataset
+
+The dataset used in this project is the **Solar Power Generation Data** dataset from Kaggle.
+
+It contains two main datasets:
 
 ### Generation Data
 
-The generation dataset contains approximately **68,000 records** and includes:
+The Generation dataset contains approximately 68,000 observations and includes:
 
-- `DATE_TIME` - Measurement timestamp
-- `PLANT_ID` - Solar power plant identifier
-- `SOURCE_KEY` - Inverter identifier
-- `DC_POWER` - DC-side power
-- `AC_POWER` - AC-side power
-- `DAILY_YIELD` - Daily energy yield
-- `TOTAL_YIELD` - Total accumulated energy yield
+* `DATE_TIME`
+* `PLANT_ID`
+* `SOURCE_KEY`
+* `DC_POWER`
+* `AC_POWER`
+* `DAILY_YIELD`
+* `TOTAL_YIELD`
 
 ### Weather Data
 
-The weather dataset contains environmental measurements including:
+The Weather dataset contains environmental measurements including:
 
-- `DATE_TIME` - Measurement timestamp
-- `PLANT_ID` - Solar power plant identifier
-- `SOURCE_KEY` - Weather sensor identifier
-- `AMBIENT_TEMPERATURE` - Ambient temperature
-- `MODULE_TEMPERATURE` - PV module temperature
-- `IRRADIATION` - Solar irradiation
-
----
-
-##  Technologies Used
-
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- VS Code
-- Git & GitHub
+* `DATE_TIME`
+* `PLANT_ID`
+* `SOURCE_KEY`
+* `AMBIENT_TEMPERATURE`
+* `MODULE_TEMPERATURE`
+* `IRRADIATION`
 
 ---
 
-##  Data Processing
+## Technologies Used
 
-The following preprocessing steps were performed:
-
-1. Loaded the generation and weather datasets.
-2. Inspected dataset dimensions and data types.
-3. Converted timestamp columns to `datetime` format.
-4. Extracted the hour from the timestamp.
-5. Merged generation and weather data using `DATE_TIME`.
-6. Checked for missing values.
-7. Examined statistical distributions and possible abnormal values.
-
-After merging, the main analysis dataset contained:
-
-**68,774 observations and 13 variables.**
-
-No missing values were detected in the merged dataset.
+* Python
+* Pandas
+* NumPy
+* Matplotlib
+* Scikit-learn
+* VS Code
+* Git & GitHub
 
 ---
 
-##  Analysis
+# Stage 1 - Data Analysis
 
-### 1. Daily Power Generation Profile
+## 1. Data Preprocessing
 
-Average AC power was calculated for each hour of the day.
+The first stage focuses on preparing and understanding the datasets.
 
-The analysis shows the expected photovoltaic generation pattern:
+The following operations were performed:
 
-- Near-zero generation during nighttime
-- Increasing production during the morning
-- Maximum production around midday
-- Decreasing production during the afternoon
-- Near-zero production after sunset
+* Loading the Generation and Weather datasets
+* Inspecting dataset dimensions and data types
+* Converting timestamp columns into datetime format
+* Extracting time-related information
+* Merging Generation and Weather data
+* Checking missing values
+* Checking statistical distributions
+* Investigating abnormal and zero-power observations
 
-This confirms that the dataset reflects a realistic solar generation pattern.
+The two datasets were merged using `DATE_TIME` and `PLANT_ID`.
+
+After merging, the resulting dataset contained:
+
+* **68,774 observations**
+* **13 variables**
+
+No missing values were found in the merged dataset.
 
 ---
 
-### 2. Solar Irradiation vs AC Power
+## 2. Daily Power Generation Profile
 
-A scatter plot was used to investigate the relationship between solar irradiation
-and AC power generation.
+The daily generation profile was analyzed to observe how solar power production changes throughout the day.
 
-The calculated Pearson correlation coefficient was:
+The analysis shows the expected daily pattern of solar generation, with power production increasing after sunrise, reaching higher levels during daylight hours, and decreasing toward sunset.
+
+---
+
+## 3. Solar Irradiation vs AC Power
+
+The relationship between solar irradiation and AC power was analyzed using correlation.
+
+The Pearson correlation coefficient was:
 
 **r = 0.989**
 
-This indicates a very strong positive linear relationship between solar
-irradiation and AC power generation in this dataset.
-
-> Correlation should not be interpreted as proof of causation. Other
-> environmental and system variables can also influence PV generation.
+This indicates a very strong positive relationship between solar irradiation and AC power in this dataset.
 
 ---
 
-### 3. Temperature Analysis
+## 4. Temperature Analysis
 
-The relationship between AC power and temperature variables was also examined.
+The relationship between temperature measurements and AC power was also investigated.
 
-| Variable | Correlation with AC Power |
-|---|---:|
-| Ambient Temperature | 0.72 |
-| Module Temperature | 0.95 |
-| Solar Irradiation | 0.989 |
+The observed correlations with AC power were approximately:
 
-Solar irradiation showed the strongest correlation with AC power.
+| Variable            | Correlation with AC Power |
+| ------------------- | ------------------------: |
+| Ambient Temperature |                      0.72 |
+| Module Temperature  |                      0.95 |
+| Solar Irradiation   |                     0.989 |
 
-The high correlation between module temperature and AC power is also
-consistent with the fact that module temperature is strongly affected by
-solar irradiation.
+Solar irradiation showed the strongest relationship with AC power among these variables.
 
 ---
 
-### 4. Inverter Comparison
+## 5. Inverter Analysis
 
-The dataset contains measurements from multiple inverters identified by
-`SOURCE_KEY`.
+Average AC power was compared between different inverter sources using the `SOURCE_KEY` variable.
 
-Average AC power was calculated for each inverter to compare their
-generation behavior.
+This analysis was used to observe differences in power generation between inverter sources.
 
-The current analysis found differences between inverter-level average
-power outputs.
-
-These differences will be investigated further in later stages of the
-project rather than being directly interpreted as differences in inverter
-efficiency.
+The differences were not directly interpreted as inverter efficiency because power output can also be affected by operating conditions and environmental factors.
 
 ---
 
-## 📁 Project Structure
+# Stage 2 - Machine Learning Prediction
+
+The second stage focuses on predicting AC power generation using machine learning.
+
+## 1. Feature Engineering
+
+Additional time-based features were extracted from the timestamp:
+
+* `MONTH`
+* `DAY_OF_YEAR`
+* `HOUR`
+
+These features were combined with environmental measurements to predict `AC_POWER`.
+
+The input features used by the models were:
+
+* `AMBIENT_TEMPERATURE`
+* `MODULE_TEMPERATURE`
+* `IRRADIATION`
+* `MONTH`
+* `DAY_OF_YEAR`
+* `HOUR`
+
+The target variable was:
+
+* `AC_POWER`
+
+---
+
+## 2. Train-Test Split
+
+The dataset was divided into training and testing sets.
+
+* **80%** of the data was used for training
+* **20%** was used for testing
+* `random_state = 42`
+
+The resulting dataset sizes were:
+
+* Training set: **55,019 observations**
+* Test set: **13,755 observations**
+
+---
+
+## 3. Linear Regression
+
+A Linear Regression model was trained to predict AC power.
+
+The model was evaluated using:
+
+* Mean Absolute Error (MAE)
+* Root Mean Squared Error (RMSE)
+* R² score
+
+---
+
+## 4. Random Forest Regression
+
+A Random Forest Regression model was also trained.
+
+The model was configured with:
+
+* `n_estimators = 100`
+* `random_state = 42`
+* `n_jobs = -1`
+
+Random Forest was evaluated using the same metrics as Linear Regression.
+
+---
+
+## 5. Model Evaluation
+
+The two models were evaluated on the same test dataset.
+
+| Model             |   MAE |  RMSE |     R² |
+| ----------------- | ----: | ----: | -----: |
+| Linear Regression | 26.33 | 55.36 | 0.9801 |
+| Random Forest     | 16.37 | 45.67 | 0.9865 |
+
+### Evaluation Metrics
+
+**MAE (Mean Absolute Error)** measures the average absolute difference between actual and predicted values.
+
+**RMSE (Root Mean Squared Error)** measures prediction error while giving greater weight to larger errors.
+
+**R² (R-squared)** indicates how much of the variation in the target variable is explained by the model.
+
+For this dataset and test split, Random Forest produced lower MAE and RMSE values and a higher R² value than Linear Regression.
+
+---
+
+# Stage 3 - Advanced PV Analysis
+
+Stage 3 is planned as a future extension of the project.
+
+Planned features include:
+
+* Anomaly detection
+* Inverter performance analysis
+* Weather-based power analysis
+* Real-time prediction
+* Dashboard development
+* Operational insights
+
+---
+
+## Project Structure
 
 ```text
 solar-power-generation-analysis/
 │
 ├── data/
-│   ├── generation.csv
-│   └── weather.csv
+│   ├── Generation.csv
+│   └── Weather.csv
 │
 ├── figures/
 │   ├── daily_generation_profile.png
@@ -156,7 +270,39 @@ solar-power-generation-analysis/
 │
 ├── README.md
 └── requirements.txt
+```
+
+---
 
 ## Project Status
 
-**Stage 1 - Data Analysis: Completed**
+### Stage 1 - Data Analysis: Completed
+
+* Data cleaning and preprocessing
+* Exploratory data analysis
+* Solar irradiation and AC power analysis
+* Temperature analysis
+* Inverter-level analysis
+
+### Stage 2 - Machine Learning Prediction: Completed
+
+* Feature engineering
+* Train-test split
+* Linear Regression
+* Random Forest Regression
+* AC power prediction
+* Model evaluation using MAE, RMSE and R²
+* Model comparison
+
+### Stage 3 - Advanced PV Analysis: Planned
+
+* Anomaly detection
+* Inverter performance analysis
+* Weather-based analysis
+* Real-time prediction
+* Dashboard
+* Operational insights
+
+```
+Yani şu anda **sadece README'yi değiştirmen yeterli.** Sonra bana “yapıştırdım” de, `requirements.txt` ve GitHub kısmına geçelim.
+```
